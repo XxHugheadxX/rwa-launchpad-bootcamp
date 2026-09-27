@@ -1,12 +1,30 @@
 # RWA Launchpad Bolivia Stellar Soroban Bootcamp
 
+## Entrega semana 4 — Stellar Elite Bolivia
+
+Regla agregada en `check_variation_gate`: cada inversión debe ser de al menos **500 unidades**
+del token de pago; por debajo falla con el error nuevo `AmountTooLow` (`#7`).
+
+| | |
+|---|---|
+| **Contract ID** (testnet) | `CCU4MTTMV23RCABGK3QHG4XRIJIJUC67EK7XCXXUXHI6PJYTKB7NSJTF` |
+| **Inversión exitosa de 500** | https://stellar.expert/explorer/testnet/tx/55cc1f65518551c872c926beebe9be00f3f4b16bfa1e91c48ba841ca6413d5a3 |
+| Inversión de 100 | Rechazada con `Error(Contract, #7)` `AmountTooLow` |
+| Contrato | [`dia-3/src/lib.rs`](dia-3/src/lib.rs) · tests en [`dia-3/src/test.rs`](dia-3/src/test.rs) |
+| Front de la demo | [`frontend/dia-3/`](frontend/dia-3/) |
+
+Detalle completo (todas las transacciones, salida de tests y de los scripts, cómo reproducirlo):
+[`dia-3/ENTREGA.md`](dia-3/ENTREGA.md).
+
+---
+
 Hands-on starter repository for the Oppia Education Bolivia bootcamp. Over three days every team builds the **same RWA Launchpad** smart contract, adding one SEP layer per day. Admin operations (mint, whitelist, withdraw, pause) and user operations (invest, balance, transfer) are kept distinct on purpose — that split carries through to deploy scripts on Día 3.
 
 ## Prerequisites
 
 - Rust 1.84+ with `wasm32v1-none` target
 - [Stellar CLI](https://developers.stellar.org/docs/tools/cli/install-cli)
-- IDE (Cursor recommended)
+- A code editor with rust-analyzer
 - Testnet account funded via Friendbot (Día 1)
 
 ## How the three days build on each other

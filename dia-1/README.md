@@ -31,7 +31,7 @@ stellar --version
 
 ### 4. IDE
 
-We recommend [Cursor](https://cursor.com/) with the Rust analyzer extension. VS Code works too.
+Any editor with the rust-analyzer extension works, for example VS Code.
 
 ## Payment token (instructor-provided)
 
