@@ -13,8 +13,6 @@ import {
 import {
   MIN_INVESTMENT,
   isNotWhitelistedError,
-  messageForContractError,
-  ContractErrorCode,
   toUserErrorMessage,
 } from "@/lib/errors";
 import {
@@ -47,10 +45,7 @@ export default function InvestPage() {
   const [transferError, setTransferError] = useState<string | null>(null);
   const [transferHash, setTransferHash] = useState<string | null>(null);
 
-  // Mirrors check_variation_gate: anything under MIN_INVESTMENT is rejected on-chain.
   const trimmedAmount = paymentAmount.trim();
-  const amountTooLow =
-    /^[0-9]+$/.test(trimmedAmount) && BigInt(trimmedAmount) < MIN_INVESTMENT;
 
   const refreshBalance = useCallback(async () => {
     if (!address) {
@@ -95,13 +90,6 @@ export default function InvestPage() {
   async function onInvest(e: FormEvent) {
     e.preventDefault();
     if (!address || notWhitelisted) return;
-    if (amountTooLow) {
-      // Fail here instead of asking Freighter to sign a transaction the gate rejects.
-      setInvestError(messageForContractError(ContractErrorCode.AmountTooLow));
-      setInvestHash(null);
-      setMinted(null);
-      return;
-    }
     setInvestLoading(true);
     setInvestError(null);
     setInvestHash(null);
@@ -207,16 +195,8 @@ export default function InvestPage() {
                   onChange={(e) => setPaymentAmount(e.target.value)}
                   placeholder={MIN_INVESTMENT.toString()}
                   disabled={notWhitelisted || !networkOk}
-                  aria-invalid={amountTooLow}
                 />
               </Field>
-              {amountTooLow ? (
-                <p className="text-body-sm text-text-muted">
-                  Below the {MIN_INVESTMENT.toString()} minimum — the contract would
-                  reject this with{" "}
-                  <code className="font-mono text-mono">AmountTooLow</code>.
-                </p>
-              ) : null}
               {investError ? <FormError message={investError} /> : null}
               {investHash ? (
                 <TxSuccess hash={investHash}>
@@ -227,7 +207,7 @@ export default function InvestPage() {
               <Button
                 type="submit"
                 loading={investLoading}
-                disabled={notWhitelisted || !networkOk || amountTooLow}
+                disabled={notWhitelisted || !networkOk}
               >
                 Invest
               </Button>

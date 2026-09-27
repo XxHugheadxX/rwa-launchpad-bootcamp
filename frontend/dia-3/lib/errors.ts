@@ -33,7 +33,7 @@ const MESSAGES: Record<ContractErrorCode, string> = {
   [ContractErrorCode.Paused]:
     "The launchpad is paused. Mint, transfer, and invest are disabled until an admin unpauses.",
   [ContractErrorCode.AmountTooLow]:
-    `Investment too small. Each invest must be at least ${MIN_INVESTMENT} units of the payment token.`,
+    `Contract error #7 (AmountTooLow): each investment must be at least ${MIN_INVESTMENT} units of the payment token.`,
 };
 
 export function messageForContractError(
