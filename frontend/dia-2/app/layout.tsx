@@ -1,12 +1,27 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Barlow_Condensed, IBM_Plex_Mono, Inter } from "next/font/google";
 import { Header } from "@/components/layout/Header";
+import { Main } from "@/components/layout/Main";
 import { WalletProvider } from "@/lib/wallet-context";
 import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+const plex = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-plex",
+  display: "swap",
+});
+
+const display = Barlow_Condensed({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -23,13 +38,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.variable} font-sans`}>
+      <body className={`${inter.variable} ${plex.variable} ${display.variable} font-sans`}>
         <WalletProvider>
           <div className="flex min-h-screen flex-col">
             <Header />
-            <main className="mx-auto w-full max-w-layout flex-1 px-4 py-8 md:px-6 md:py-10">
-              {children}
-            </main>
+            <Main>{children}</Main>
           </div>
         </WalletProvider>
       </body>

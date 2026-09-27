@@ -73,7 +73,7 @@ export default function AdminPage() {
   if (!address) {
     return (
       <div className="mx-auto max-w-lg space-y-4">
-        <h1 className="text-h1 text-text-primary">Admin</h1>
+        <h1 className="poster-page text-text-primary">Admin</h1>
         <Card
           title="Connect as the admin wallet"
           state="empty"
@@ -95,7 +95,7 @@ export default function AdminPage() {
   if (!adminConfigured) {
     return (
       <div className="mx-auto max-w-lg space-y-4">
-        <h1 className="text-h1 text-text-primary">Admin</h1>
+        <h1 className="poster-page text-text-primary">Admin</h1>
         <Card
           title="Admin address not configured"
           state="empty"
@@ -108,7 +108,7 @@ export default function AdminPage() {
   if (!isAdmin) {
     return (
       <div className="mx-auto max-w-lg space-y-4">
-        <h1 className="text-h1 text-text-primary">Admin</h1>
+        <h1 className="poster-page text-text-primary">Admin</h1>
         <Card
           title="Connect as the admin wallet"
           state="empty"
@@ -143,7 +143,7 @@ export default function AdminPage() {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <h1 className="text-h1 text-text-primary">Admin</h1>
+        <h1 className="poster-page text-text-primary">Admin</h1>
         <p className="max-w-2xl text-body-sm text-text-secondary">
           Admin-gated calls for the Día 3 launchpad. Connected as{" "}
           <code className="font-mono text-mono text-text-primary">

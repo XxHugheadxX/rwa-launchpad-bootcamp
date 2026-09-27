@@ -2,33 +2,33 @@
 @config "../tailwind.config.ts";
 
 @theme inline {
-  --color-bg-canvas: #080a0d;
-  --color-bg-surface: #101318;
-  --color-bg-elevated: #171c23;
-  --color-bg-soft: #202631;
+  --color-bg-canvas: #0f0f0f;
+  --color-bg-surface: #0f0f0f;
+  --color-bg-elevated: #0f0f0f;
+  --color-bg-soft: #161616;
 
-  --color-border-default: #2b323d;
-  --color-border-subtle: #202631;
+  --color-border-default: #3a3a3a;
+  --color-border-subtle: #2a2a2a;
 
-  --color-text-primary: #f5f7fa;
-  --color-text-secondary: #a2acb9;
-  --color-text-muted: #697483;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #969696;
+  --color-text-muted: #969696;
 
-  --color-brand-blue: #2f80ff;
-  --color-brand-cyan: #58d9ff;
+  --color-brand-blue: #fdda24;
+  --color-brand-cyan: #fdda24;
 
-  --color-semantic-success: #35d39a;
-  --color-semantic-warning: #f4c95d;
-  --color-semantic-danger: #ff647c;
-  --color-semantic-info: #70a7ff;
+  --color-semantic-success: #fdda24;
+  --color-semantic-warning: #ff3f00;
+  --color-semantic-danger: #ff3f00;
+  --color-semantic-info: #969696;
 
   --font-sans: var(--font-inter), Inter, ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-mono: var(--font-plex), "IBM Plex Mono", ui-monospace, monospace;
 
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
 
   --spacing-1: 4px;
   --spacing-2: 8px;
@@ -50,15 +50,172 @@
 
   body {
     @apply min-h-screen bg-bg-canvas font-sans text-text-primary antialiased;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.045) 0.6px, transparent 0.6px);
+    background-size: 3px 3px;
   }
 
   ::selection {
-    background: color-mix(in srgb, #2f80ff 40%, transparent);
+    background: #fdda24;
+    color: #0f0f0f;
   }
 }
 
 @layer utilities {
   .bg-brand-gradient {
-    background-image: linear-gradient(135deg, #2368f2 0%, #58d9ff 100%);
+    background-color: #fdda24;
+    background-image: none;
+  }
+
+  .meta-kicker {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    color: #969696;
+  }
+
+  .poster-title {
+    font-family: var(--font-display), "Arial Narrow", Impact, sans-serif;
+    font-size: clamp(3.5rem, 9vw, 7.25rem);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 0.86;
+    text-transform: uppercase;
+  }
+
+  .poster-page {
+    font-family: var(--font-display), "Arial Narrow", Impact, sans-serif;
+    font-size: clamp(2.75rem, 6vw, 4.75rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+
+  .accent-word {
+    color: #fdda24;
+    animation: accent-in 240ms ease-out 1 both;
+  }
+
+  .status-pip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .status-pip::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: currentColor;
+    flex: none;
+  }
+
+  .status-pip-off::before {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px currentColor;
+  }
+
+  .text-action {
+    @apply inline-flex min-h-[44px] cursor-pointer items-center justify-center px-3 font-mono text-label uppercase tracking-[0.16em] text-brand-cyan transition duration-fast ease-out;
+    margin-inline: -12px;
+  }
+
+  .text-action:hover {
+    @apply text-text-primary;
+  }
+
+  .text-action:active {
+    opacity: 0.7;
+  }
+
+  .text-action:focus-visible {
+    outline: 1px solid #fdda24;
+    outline-offset: 3px;
+  }
+
+  .text-action:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+
+  .inline-hit {
+    position: relative;
+  }
+
+  .inline-hit::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    min-width: 44px;
+    width: 100%;
+    height: 44px;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes accent-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes motion-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes motion-pop {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.motion-enter {
+  animation: motion-enter 200ms ease-out both;
+}
+
+.motion-pop {
+  animation: motion-pop 180ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accent-word,
+  .motion-enter,
+  .motion-pop {
+    animation: none !important;
+  }
+
+  .text-action:active,
+  button:active,
+  a:active {
+    transform: none !important;
+    scale: 1 !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

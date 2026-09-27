@@ -24,10 +24,13 @@ export function Header() {
   } = useWallet();
 
   return (
-    <header className="border-b border-border-default bg-bg-surface/90 backdrop-blur-sm">
+    <header className="border-b border-border-default bg-bg-canvas">
       <div className="mx-auto flex max-w-layout items-center justify-between gap-4 px-4 py-3 md:px-6">
         <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2.5">
+          <Link
+            href="/"
+            className="flex min-h-[44px] items-center gap-2.5 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-brand-cyan"
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/brand/oppia-mark-white.svg"
@@ -35,7 +38,7 @@ export function Header() {
               width={28}
               height={28}
             />
-            <span className="text-body-sm font-semibold tracking-tight text-text-primary">
+            <span className="font-display text-body-sm font-semibold uppercase tracking-[-0.03em] text-text-primary">
               RWA Launchpad
             </span>
           </Link>
@@ -51,9 +54,9 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   className={[
-                    "rounded-sm px-3 py-2 text-body-sm font-semibold transition duration-fast",
+                    "inline-flex min-h-[44px] items-center px-3 font-mono text-label uppercase tracking-[0.16em] transition duration-fast ease-out focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-brand-cyan",
                     active
-                      ? "bg-bg-soft text-text-primary"
+                      ? "text-brand-cyan"
                       : "text-text-secondary hover:text-text-primary",
                   ].join(" ")}
                 >
@@ -77,7 +80,7 @@ export function Header() {
 
           {address ? (
             <div className="flex items-center gap-2">
-              <code className="rounded-sm border border-border-default bg-bg-elevated px-2.5 py-2 font-mono text-mono text-text-primary">
+              <code className="inline-flex min-h-[44px] items-center border border-border-default bg-transparent px-2.5 font-mono text-mono text-text-primary">
                 {truncateAddress(address, 5)}
               </code>
               <Button variant="ghost" onClick={disconnect}>
@@ -107,10 +110,10 @@ export function Header() {
               key={item.href}
               href={item.href}
               className={[
-                "flex-1 rounded-sm px-2 py-2 text-center text-label font-semibold",
+                "inline-flex min-h-[44px] flex-1 items-center justify-center px-2 text-center font-mono text-label uppercase tracking-[0.14em] transition duration-fast ease-out focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-brand-cyan",
                 active
-                  ? "bg-bg-soft text-text-primary"
-                  : "text-text-secondary",
+                  ? "text-brand-cyan"
+                  : "text-text-secondary hover:text-text-primary",
               ].join(" ")}
             >
               {item.label}

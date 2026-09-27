@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 /**
- * Oppia design tokens (frontend-design/*.json) exposed as Tailwind theme values.
+ * Stellar.org palette (live site, 2026): #0F0F0F field, #FDDA24 accent, #FF3F00 danger.
  * Dark-first only; no light theme.
  */
 const config: Config = {
@@ -14,30 +14,30 @@ const config: Config = {
     extend: {
       colors: {
         bg: {
-          canvas: "#080A0D",
-          surface: "#101318",
-          elevated: "#171C23",
-          soft: "#202631",
+          canvas: "#0F0F0F",
+          surface: "#0F0F0F",
+          elevated: "#0F0F0F",
+          soft: "#161616",
         },
         border: {
-          DEFAULT: "#2B323D",
-          default: "#2B323D",
-          subtle: "#202631",
+          DEFAULT: "#3A3A3A",
+          default: "#3A3A3A",
+          subtle: "#2A2A2A",
         },
         text: {
-          primary: "#F5F7FA",
-          secondary: "#A2ACB9",
-          muted: "#697483",
+          primary: "#FFFFFF",
+          secondary: "#969696",
+          muted: "#969696",
         },
         brand: {
-          blue: "#2F80FF",
-          cyan: "#58D9FF",
+          blue: "#FDDA24",
+          cyan: "#FDDA24",
         },
         semantic: {
-          success: "#35D39A",
-          warning: "#F4C95D",
-          danger: "#FF647C",
-          info: "#70A7FF",
+          success: "#FDDA24",
+          warning: "#FF3F00",
+          danger: "#FF3F00",
+          info: "#969696",
         },
       },
       fontFamily: {
@@ -52,12 +52,18 @@ const config: Config = {
           "sans-serif",
         ],
         mono: [
+          "var(--font-plex)",
+          "IBM Plex Mono",
           "ui-monospace",
           "SFMono-Regular",
           "Menlo",
-          "Monaco",
-          "Consolas",
           "monospace",
+        ],
+        display: [
+          "var(--font-display)",
+          "Arial Narrow",
+          "Impact",
+          "sans-serif",
         ],
       },
       fontSize: {
@@ -85,10 +91,10 @@ const config: Config = {
         "24": "96px",
       },
       borderRadius: {
-        sm: "6px",
-        md: "10px",
-        lg: "16px",
-        xl: "24px",
+        sm: "0px",
+        md: "0px",
+        lg: "0px",
+        xl: "0px",
       },
       maxWidth: {
         layout: "1440px",
@@ -101,8 +107,7 @@ const config: Config = {
         out: "ease-out",
       },
       backgroundImage: {
-        "brand-gradient":
-          "linear-gradient(135deg, #2368F2 0%, #58D9FF 100%)",
+        "brand-gradient": "linear-gradient(#FDDA24, #FDDA24)",
       },
     },
   },

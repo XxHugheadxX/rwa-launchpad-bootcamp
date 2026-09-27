@@ -74,7 +74,7 @@ function AssetInfoPanel() {
           <button
             type="button"
             onClick={() => void load()}
-            className="font-semibold text-brand-cyan hover:underline"
+            className="text-action"
           >
             Retry
           </button>
@@ -97,7 +97,7 @@ function AssetInfoPanel() {
         footer={
           <Link
             href="/initialize"
-            className="font-semibold text-brand-cyan hover:underline"
+            className="text-action"
           >
             Go to Initialize →
           </Link>
@@ -112,10 +112,10 @@ function AssetInfoPanel() {
       metadata={
         <span
           className={[
-            "rounded-sm px-2 py-1 text-label font-semibold",
+            "status-pip text-label font-semibold uppercase tracking-[0.22em]",
             asset.paused
-              ? "bg-semantic-warning/15 text-semantic-warning"
-              : "bg-semantic-success/15 text-semantic-success",
+              ? "status-pip-off text-semantic-warning"
+              : "text-semantic-success",
           ].join(" ")}
         >
           {asset.paused ? "Paused" : "Initialized"}
@@ -286,7 +286,7 @@ function Sep1Panel() {
           <button
             type="button"
             onClick={() => void load()}
-            className="font-semibold text-brand-cyan hover:underline"
+            className="text-action"
           >
             Retry
           </button>
@@ -317,7 +317,7 @@ function Sep1Panel() {
     >
       <div className="min-w-0 space-y-6">
         {tomlHasPlaceholders(toml) && (
-          <div className="rounded-sm border border-semantic-warning/30 bg-semantic-warning/10 px-4 py-3 text-body-sm text-semantic-warning">
+          <div className="motion-pop border-l border-semantic-warning pl-4 text-body-sm text-text-secondary">
             This stellar.toml is still the unfilled template. Replace every TODO
             field with your real org and asset details before showing this to
             anyone.
@@ -391,47 +391,34 @@ function Sep1Panel() {
 
 export default function HomePage() {
   return (
-    <div className="space-y-8">
-      <section className="relative overflow-hidden rounded-lg border border-border-default bg-bg-surface">
-        <div
-          className="pointer-events-none absolute inset-0 z-0 opacity-[0.06]"
-          aria-hidden
-          style={{
-            WebkitMaskImage:
-              "radial-gradient(ellipse 85% 80% at 70% 45%, #000 15%, transparent 72%)",
-            maskImage:
-              "radial-gradient(ellipse 85% 80% at 70% 45%, #000 15%, transparent 72%)",
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/brand/oppia-wave-linkedin-right-to-left.svg"
-            alt=""
-            className="h-full w-full object-cover object-right"
-          />
-        </div>
-        <div className="relative z-10 max-w-2xl space-y-4 px-5 py-8 md:px-8 md:py-10">
-          <p className="text-label uppercase tracking-wider text-brand-cyan">
-            Oppia · Stellar Bolivia Bootcamp · Día 1
-          </p>
-          <h1 className="text-h1 text-text-primary md:text-display">
-            RWA Launchpad
-          </h1>
-          <p className="text-body text-text-secondary">
-            Day-one checkpoint: create the repo, fill in{" "}
-            <code className="font-mono text-mono text-text-primary">
-              stellar.toml
-            </code>
-            , compile the Soroban scaffold, fund your testnet address, and call{" "}
-            <code className="font-mono text-mono text-text-primary">
-              initialize
-            </code>{" "}
-            on your deployed contract. This UI covers that loop; nothing more
-            until Día 2.
-          </p>
-          <Link href="/initialize">
-            <Button>Initialize contract</Button>
-          </Link>
+    <div className="space-y-16">
+      <section className="border-b border-border-default pb-14 md:pb-24">
+        <div className="grid items-end gap-12 lg:grid-cols-[minmax(0,1.4fr)_minmax(16rem,0.7fr)]">
+          <div className="space-y-5">
+            <p className="meta-kicker">
+              Oppia · Stellar Bolivia Bootcamp · Día 1
+            </p>
+            <h1 className="poster-title text-text-primary">
+              RWA <span className="accent-word">Launchpad</span>
+            </h1>
+          </div>
+          <div className="max-w-md space-y-6 lg:pb-2">
+            <p className="text-body text-text-secondary">
+              Day-one checkpoint: create the repo, fill in{" "}
+              <code className="font-mono text-mono text-text-primary">
+                stellar.toml
+              </code>
+              , compile the Soroban scaffold, fund your testnet address, and call{" "}
+              <code className="font-mono text-mono text-text-primary">
+                initialize
+              </code>{" "}
+              on your deployed contract. This UI covers that loop; nothing more
+              until Día 2.
+            </p>
+            <Link href="/initialize">
+              <Button>Initialize contract</Button>
+            </Link>
+          </div>
         </div>
       </section>
 

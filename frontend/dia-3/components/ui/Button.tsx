@@ -16,13 +16,13 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-brand-gradient text-text-primary shadow-none hover:brightness-110 active:brightness-95 disabled:opacity-40 disabled:hover:brightness-100",
+    "bg-brand-cyan text-[#0F0F0F] hover:bg-white active:opacity-80 disabled:hover:bg-brand-cyan disabled:active:opacity-40",
   secondary:
-    "bg-bg-elevated text-text-primary border border-border-default hover:bg-bg-soft active:bg-bg-surface disabled:opacity-40",
+    "border border-white/35 bg-transparent text-white hover:border-brand-cyan hover:text-brand-cyan active:opacity-80 disabled:hover:border-white/35 disabled:hover:text-white",
   ghost:
-    "bg-transparent text-text-secondary hover:text-text-primary hover:bg-bg-soft/60 active:bg-bg-soft disabled:opacity-40",
+    "bg-transparent text-text-secondary hover:text-white active:opacity-80 disabled:hover:text-text-secondary",
   danger:
-    "bg-semantic-danger/15 text-semantic-danger border border-semantic-danger/40 hover:bg-semantic-danger/25 active:bg-semantic-danger/30 disabled:opacity-40",
+    "bg-semantic-danger text-[#0F0F0F] hover:bg-white active:opacity-80 disabled:hover:bg-semantic-danger",
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -47,8 +47,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={isDisabled}
         aria-busy={loading || undefined}
         className={[
-          "inline-flex min-h-[44px] items-center justify-center gap-2 rounded-md px-4 text-body-sm font-semibold transition duration-fast ease-out",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-bg-canvas",
+          "inline-flex min-h-[44px] select-none items-center justify-center gap-2 rounded-none px-4 font-mono text-label font-medium uppercase tracking-[0.16em] transition duration-fast ease-out",
+          "focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-white",
+          loading
+            ? "cursor-progress"
+            : "cursor-pointer disabled:cursor-not-allowed disabled:opacity-40",
           variantClasses[variant],
           className,
         ].join(" ")}
@@ -57,7 +60,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {loading ? (
           <>
             <span
-              className="h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent"
+              className="h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent motion-reduce:animate-none"
               aria-hidden
             />
             <span>{children}</span>

@@ -71,7 +71,7 @@ export default function UserPage() {
   if (!address) {
     return (
       <div className="mx-auto max-w-lg space-y-4">
-        <h1 className="text-h1 text-text-primary">User</h1>
+        <h1 className="poster-page text-text-primary">User</h1>
         <Card
           title="Wallet required"
           state="empty"
@@ -115,7 +115,7 @@ export default function UserPage() {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <h1 className="text-h1 text-text-primary">User</h1>
+        <h1 className="poster-page text-text-primary">User</h1>
         <p className="max-w-2xl text-body-sm text-text-secondary">
           Look up RWA token balances and transfer units between addresses.
           Connected as{" "}

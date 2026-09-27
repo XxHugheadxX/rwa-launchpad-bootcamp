@@ -77,7 +77,7 @@ export default function InvestPage() {
   if (!address) {
     return (
       <div className="mx-auto max-w-lg space-y-4">
-        <h1 className="text-h1 text-text-primary">Invest</h1>
+        <h1 className="poster-page text-text-primary">Invest</h1>
         <Card
           title="Wallet required"
           state="empty"
@@ -148,7 +148,7 @@ export default function InvestPage() {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <h1 className="text-h1 text-text-primary">Invest</h1>
+        <h1 className="poster-page text-text-primary">Invest</h1>
         <p className="max-w-2xl text-body-sm text-text-secondary">
           Whitelisted investors call <code className="font-mono text-mono">invest</code>{" "}
           with a payment-token amount; the contract mints{" "}
@@ -177,7 +177,7 @@ export default function InvestPage() {
             footer={
               <button
                 type="button"
-                className="font-semibold text-brand-cyan hover:underline"
+                className="text-action"
                 onClick={() => void refreshBalance()}
               >
                 Refresh

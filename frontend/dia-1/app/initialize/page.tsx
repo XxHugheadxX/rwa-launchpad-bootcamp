@@ -105,7 +105,7 @@ export default function InitializePage() {
   if (!address) {
     return (
       <div className="mx-auto max-w-lg space-y-4">
-        <h1 className="text-h1 text-text-primary">Initialize</h1>
+        <h1 className="poster-page text-text-primary">Initialize</h1>
         <Card
           title="Connect Freighter"
           state="empty"
@@ -123,7 +123,7 @@ export default function InitializePage() {
   return (
     <div className="mx-auto max-w-xl space-y-6">
       <div className="space-y-2">
-        <h1 className="text-h1 text-text-primary">Initialize</h1>
+        <h1 className="poster-page text-text-primary">Initialize</h1>
         <p className="text-body-sm text-text-secondary">
           Call{" "}
           <code className="font-mono text-mono text-text-primary">
@@ -220,7 +220,7 @@ export default function InitializePage() {
                 />
               </Field>
 
-              <label className="flex min-h-[44px] cursor-pointer items-center gap-3 rounded-md border border-border-default bg-bg-elevated px-3">
+              <label className="flex min-h-[44px] cursor-pointer items-center gap-3 rounded-md border border-border-default bg-bg-elevated px-3 transition duration-fast ease-out hover:border-text-muted has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-brand-cyan">
                 <input
                   type="checkbox"
                   checked={paused}

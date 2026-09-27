@@ -60,7 +60,7 @@ function AssetInfoPanel() {
           <button
             type="button"
             onClick={() => void load()}
-            className="font-semibold text-brand-cyan hover:underline"
+            className="text-action"
           >
             Retry
           </button>
@@ -83,7 +83,7 @@ function AssetInfoPanel() {
         footer={
           <Link
             href="/admin"
-            className="font-semibold text-brand-cyan hover:underline"
+            className="text-action"
           >
             Go to Admin →
           </Link>
@@ -98,10 +98,10 @@ function AssetInfoPanel() {
       metadata={
         <span
           className={[
-            "rounded-sm px-2 py-1 text-label font-semibold",
+            "status-pip text-label font-semibold uppercase tracking-[0.22em]",
             asset.paused
-              ? "bg-semantic-warning/15 text-semantic-warning"
-              : "bg-semantic-success/15 text-semantic-success",
+              ? "status-pip-off text-semantic-warning"
+              : "text-semantic-success",
           ].join(" ")}
         >
           {asset.paused ? "Paused" : "Live"}
@@ -141,46 +141,33 @@ function AssetInfoPanel() {
 
 export default function HomePage() {
   return (
-    <div className="space-y-8">
-      <section className="relative overflow-hidden rounded-lg border border-border-default bg-bg-surface">
-        <div
-          className="pointer-events-none absolute inset-0 z-0 opacity-[0.06]"
-          aria-hidden
-          style={{
-            WebkitMaskImage:
-              "radial-gradient(ellipse 85% 80% at 70% 45%, #000 15%, transparent 72%)",
-            maskImage:
-              "radial-gradient(ellipse 85% 80% at 70% 45%, #000 15%, transparent 72%)",
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/brand/oppia-wave-linkedin-right-to-left.svg"
-            alt=""
-            className="h-full w-full object-cover object-right"
-          />
-        </div>
-        <div className="relative z-10 max-w-2xl space-y-4 px-5 py-8 md:px-8 md:py-10">
-          <p className="text-label uppercase tracking-wider text-brand-cyan">
-            Oppia · Stellar Bolivia Bootcamp · Día 2
-          </p>
-          <h1 className="text-h1 text-text-primary md:text-display">
-            RWA Launchpad
-          </h1>
-          <p className="text-body text-text-secondary">
-            Day-two checkpoint: a functional contract with separate admin and
-            user tools. Initialize the asset, mint RWA units, manage the
-            whitelist, look up balances, and transfer tokens, scoped to what
-            the Día 2 contract actually implements. Invest and withdraw arrive
-            on Día 3.
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <Link href="/admin">
-              <Button>Admin actions</Button>
-            </Link>
-            <Link href="/user">
-              <Button variant="secondary">User actions</Button>
-            </Link>
+    <div className="space-y-16">
+      <section className="border-b border-border-default pb-14 md:pb-24">
+        <div className="grid items-end gap-12 lg:grid-cols-[minmax(0,1.4fr)_minmax(16rem,0.7fr)]">
+          <div className="space-y-5">
+            <p className="meta-kicker">
+              Oppia · Stellar Bolivia Bootcamp · Día 2
+            </p>
+            <h1 className="poster-title text-text-primary">
+              RWA <span className="accent-word">Launchpad</span>
+            </h1>
+          </div>
+          <div className="max-w-md space-y-6 lg:pb-2">
+            <p className="text-body text-text-secondary">
+              Day-two checkpoint: a functional contract with separate admin and
+              user tools. Initialize the asset, mint RWA units, manage the
+              whitelist, look up balances, and transfer tokens, scoped to what
+              the Día 2 contract actually implements. Invest and withdraw arrive
+              on Día 3.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/admin">
+                <Button>Admin actions</Button>
+              </Link>
+              <Link href="/user">
+                <Button variant="secondary">User actions</Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
