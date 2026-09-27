@@ -6,7 +6,18 @@ export enum ContractErrorCode {
   InvalidAmount = 4,
   NotWhitelisted = 5,
   Paused = 6,
+  AmountTooLow = 7,
 }
+
+/** Minimum payment amount enforced by check_variation_gate in dia-3/src/lib.rs. */
+export const MIN_INVESTMENT = 500n;
+
+/** Every code declared above, so adding a variant is enough to make it parseable. */
+const KNOWN_CODES: ReadonlySet<number> = new Set(
+  Object.values(ContractErrorCode).filter(
+    (value): value is number => typeof value === "number",
+  ),
+);
 
 const MESSAGES: Record<ContractErrorCode, string> = {
   [ContractErrorCode.NotInitialized]:
@@ -21,6 +32,8 @@ const MESSAGES: Record<ContractErrorCode, string> = {
     "This wallet is not whitelisted. Ask an admin to approve your address before investing.",
   [ContractErrorCode.Paused]:
     "The launchpad is paused. Mint, transfer, and invest are disabled until an admin unpauses.",
+  [ContractErrorCode.AmountTooLow]:
+    `Investment too small. Each invest must be at least ${MIN_INVESTMENT} units of the payment token.`,
 };
 
 export function messageForContractError(
@@ -53,13 +66,13 @@ export function parseContractErrorCode(error: unknown): number | null {
     const match = text.match(re);
     if (match?.[1]) {
       const code = Number(match[1]);
-      if (code >= 1 && code <= 6) return code;
+      if (KNOWN_CODES.has(code)) return code;
     }
   }
 
   // Sometimes the numeric code alone appears near "contract"
-  const loose = text.match(/contract[^0-9]{0,40}#?([1-6])\b/i);
-  if (loose?.[1]) return Number(loose[1]);
+  const loose = text.match(/contract[^0-9]{0,40}#?(\d+)\b/i);
+  if (loose?.[1] && KNOWN_CODES.has(Number(loose[1]))) return Number(loose[1]);
 
   return null;
 }

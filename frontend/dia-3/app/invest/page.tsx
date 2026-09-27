@@ -10,7 +10,13 @@ import {
   TxSuccess,
   inputClassName,
 } from "@/components/ui/FormBits";
-import { isNotWhitelistedError, toUserErrorMessage } from "@/lib/errors";
+import {
+  MIN_INVESTMENT,
+  isNotWhitelistedError,
+  messageForContractError,
+  ContractErrorCode,
+  toUserErrorMessage,
+} from "@/lib/errors";
 import {
   balance as readBalance,
   invest,
@@ -40,6 +46,11 @@ export default function InvestPage() {
   const [transferLoading, setTransferLoading] = useState(false);
   const [transferError, setTransferError] = useState<string | null>(null);
   const [transferHash, setTransferHash] = useState<string | null>(null);
+
+  // Mirrors check_variation_gate: anything under MIN_INVESTMENT is rejected on-chain.
+  const trimmedAmount = paymentAmount.trim();
+  const amountTooLow =
+    /^[0-9]+$/.test(trimmedAmount) && BigInt(trimmedAmount) < MIN_INVESTMENT;
 
   const refreshBalance = useCallback(async () => {
     if (!address) {
@@ -84,13 +95,20 @@ export default function InvestPage() {
   async function onInvest(e: FormEvent) {
     e.preventDefault();
     if (!address || notWhitelisted) return;
+    if (amountTooLow) {
+      // Fail here instead of asking Freighter to sign a transaction the gate rejects.
+      setInvestError(messageForContractError(ContractErrorCode.AmountTooLow));
+      setInvestHash(null);
+      setMinted(null);
+      return;
+    }
     setInvestLoading(true);
     setInvestError(null);
     setInvestHash(null);
     setMinted(null);
     try {
       const result = await wrapContractCall(
-        invest(address, paymentAmount, signTransaction),
+        invest(address, trimmedAmount, signTransaction),
       );
       setInvestHash(result.hash);
       setMinted(result.result);
@@ -135,7 +153,11 @@ export default function InvestPage() {
           Whitelisted investors call <code className="font-mono text-mono">invest</code>{" "}
           with a payment-token amount; the contract mints{" "}
           <code className="font-mono text-mono">payment_amount / price_per_unit</code>{" "}
-          RWA units. Transfer moves RWA balances between addresses.
+          RWA units. Each investment must be at least{" "}
+          <code className="font-mono text-mono">{MIN_INVESTMENT.toString()}</code>{" "}
+          payment units; below that the contract fails with{" "}
+          <code className="font-mono text-mono">AmountTooLow</code>. Transfer moves
+          RWA balances between addresses.
         </p>
         {!networkOk ? (
           <FormError message="Freighter network does not match NEXT_PUBLIC_NETWORK. Switch networks before submitting." />
@@ -174,7 +196,7 @@ export default function InvestPage() {
             <form className="space-y-4" onSubmit={(e) => void onInvest(e)}>
               <Field
                 label="Payment amount"
-                hint="Integer units of the payment token (i128)."
+                hint={`Integer units of the payment token (i128). Minimum ${MIN_INVESTMENT} per investment.`}
               >
                 <input
                   className={inputClassName}
@@ -183,10 +205,18 @@ export default function InvestPage() {
                   required
                   value={paymentAmount}
                   onChange={(e) => setPaymentAmount(e.target.value)}
-                  placeholder="1000000"
+                  placeholder={MIN_INVESTMENT.toString()}
                   disabled={notWhitelisted || !networkOk}
+                  aria-invalid={amountTooLow}
                 />
               </Field>
+              {amountTooLow ? (
+                <p className="text-body-sm text-text-muted">
+                  Below the {MIN_INVESTMENT.toString()} minimum — the contract would
+                  reject this with{" "}
+                  <code className="font-mono text-mono">AmountTooLow</code>.
+                </p>
+              ) : null}
               {investError ? <FormError message={investError} /> : null}
               {investHash ? (
                 <TxSuccess hash={investHash}>
@@ -197,7 +227,7 @@ export default function InvestPage() {
               <Button
                 type="submit"
                 loading={investLoading}
-                disabled={notWhitelisted || !networkOk}
+                disabled={notWhitelisted || !networkOk || amountTooLow}
               >
                 Invest
               </Button>
