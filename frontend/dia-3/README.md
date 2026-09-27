@@ -13,11 +13,15 @@ Next.js 15 (App Router) + TypeScript + Tailwind demo UI for the **Día 3** Sorob
 ## Setup
 
 ```bash
-cd frontend
-npm install
+cd frontend/dia-3
+pnpm install        # o: npm install
 cp .env.example .env.local
-npm run dev
+pnpm dev            # o: npm run dev
 ```
+
+Con pnpm, `pnpm-workspace.yaml` hoistea los plugins de ESLint que
+`eslint-config-next` busca en la raiz de `node_modules`; sin eso `pnpm lint` falla
+con `Cannot find module 'eslint-plugin-react-hooks'`.
 
 Open [http://localhost:3000](http://localhost:3000).
 

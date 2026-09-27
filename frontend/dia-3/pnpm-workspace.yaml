@@ -1,0 +1,6 @@
+allowBuilds:
+  unrs-resolver: false
+# eslint-config-next carga sus plugins desde la raiz de node_modules; con el
+# layout aislado de pnpm no los encuentra si no se hoistean.
+publicHoistPattern:
+  - "*eslint*"
