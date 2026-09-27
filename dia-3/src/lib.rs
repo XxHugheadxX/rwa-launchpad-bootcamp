@@ -32,7 +32,11 @@ pub enum Error {
     InvalidAmount = 4,
     NotWhitelisted = 5,
     Paused = 6,
+    AmountTooLow = 7,
 }
+
+/// Minimo de unidades del token de pago que exige cada inversion.
+pub const MIN_INVESTMENT: i128 = 500;
 
 #[contract]
 pub struct RwaLaunchpad;
@@ -75,9 +79,17 @@ impl RwaLaunchpad {
             .unwrap_or(false)
     }
 
-    // Paste your team's Day 2 variación logic here. Default: no extra gate.
-    fn check_variation_gate(env: &Env, investor: &Address) -> Result<(), Error> {
+    // Variación: cada inversión debe ser de al menos MIN_INVESTMENT unidades
+    // del token de pago. Por debajo de ese monto la inversión se rechaza.
+    fn check_variation_gate(
+        env: &Env,
+        investor: &Address,
+        payment_amount: i128,
+    ) -> Result<(), Error> {
         let _ = (env, investor);
+        if payment_amount < MIN_INVESTMENT {
+            return Err(Error::AmountTooLow);
+        }
         Ok(())
     }
 
@@ -170,14 +182,14 @@ impl RwaLaunchpad {
     pub fn invest(env: Env, investor: Address, payment_amount: i128) -> i128 {
         Self::require_initialized(&env);
         investor.require_auth();
-        if let Err(err) = Self::check_variation_gate(&env, &investor) {
+        if payment_amount <= 0 {
+            panic_with_error!(&env, Error::InvalidAmount);
+        }
+        if let Err(err) = Self::check_variation_gate(&env, &investor, payment_amount) {
             panic_with_error!(&env, err);
         }
         Self::require_not_paused(&env);
 
-        if payment_amount <= 0 {
-            panic_with_error!(&env, Error::InvalidAmount);
-        }
         if !Self::is_whitelisted(&env, &investor) {
             panic_with_error!(&env, Error::NotWhitelisted);
         }
