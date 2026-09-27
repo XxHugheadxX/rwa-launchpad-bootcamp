@@ -4,13 +4,18 @@ import {
   Contract,
   TransactionBuilder,
   nativeToScVal,
+  rpc,
   scValToNative,
   xdr,
 } from "@stellar/stellar-sdk";
-import { Api, Server, assembleTransaction } from "@stellar/stellar-sdk/rpc";
 import { config, isContractConfigured } from "@/lib/config";
 import { toContractCallError } from "@/lib/errors";
 import { networkPassphrase } from "@/lib/stellar/network";
+
+// Take rpc from the same entry point as TransactionBuilder. In the browser
+// "@stellar/stellar-sdk/rpc" loads a second copy of the SDK, and
+// assembleTransaction then rejects our Transaction ("expected a 'Transaction'").
+const { Api, Server, assembleTransaction } = rpc;
 
 export type SignTransactionFn = (
   xdr: string,
@@ -39,7 +44,7 @@ function requireContractId(): string {
   return config.contractId;
 }
 
-export function getRpcServer(): Server {
+export function getRpcServer(): rpc.Server {
   return new Server(config.sorobanRpcUrl, { allowHttp: false });
 }
 
@@ -106,16 +111,16 @@ function parseAssetInfoNative(raw: unknown): AssetInfo {
 }
 
 async function pollTransaction(
-  server: Server,
+  server: rpc.Server,
   hash: string,
-): Promise<Api.GetSuccessfulTransactionResponse> {
+): Promise<rpc.Api.GetSuccessfulTransactionResponse> {
   const started = Date.now();
   const timeoutMs = 60_000;
 
   while (Date.now() - started < timeoutMs) {
     const tx = await server.getTransaction(hash);
     if (tx.status === Api.GetTransactionStatus.SUCCESS) {
-      return tx as Api.GetSuccessfulTransactionResponse;
+      return tx as rpc.Api.GetSuccessfulTransactionResponse;
     }
     if (tx.status === Api.GetTransactionStatus.FAILED) {
       throw new Error(
