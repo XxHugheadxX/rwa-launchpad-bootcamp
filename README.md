@@ -120,6 +120,7 @@ el error #7 del contrato) y 500 (muestra la tx y el nuevo balance).
 | `lib/errors.ts` reconoce `AmountTooLow` (#7) | El parser solo aceptaba los códigos 1 a 6, así que el error nuevo se mostraba como texto crudo del SDK. Ahora los códigos válidos salen del propio enum |
 | `/invest` envía cualquier monto y muestra el error del contrato | Para que en la demo se vea al contrato rechazando la inversión de 100; el mínimo se indica en el texto y en el campo |
 | `lib/stellar/contract.ts` toma `rpc` del mismo entry point que `TransactionBuilder` | En el navegador, `@stellar/stellar-sdk/rpc` cargaba una segunda copia del SDK y toda operación firmada fallaba con `expected a 'Transaction', got: [object Object]`. Venía en el código original |
+| `assetInfoScVal` arma el `AssetInfo` con las claves en orden alfabético (`dia-1`, `dia-2` y `dia-3`) | Soroban solo acepta mapas con las claves ordenadas; con el orden original, `initialize` desde el front fallaba con `ScMap was not sorted by key for conversion to host object`. Venía en el código original |
 | Rediseño visual de `dia-1`, `dia-2` y `dia-3` | Nuevos estilos y componentes (`Main`, `Button`, `Card`, `FormBits`, `Header`) |
 | Soporte para pnpm (`pnpm-workspace.yaml`) | Con pnpm, `eslint-config-next` no encontraba sus plugins; ahora se hoistean. npm sigue funcionando |
 | `.env.example` con los ids del contrato de la demo | El front arranca apuntando al contrato desplegado sin configurar nada |

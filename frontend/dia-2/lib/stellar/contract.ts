@@ -66,26 +66,28 @@ function assetInfoScVal(asset: {
   payment_token: string;
   paused: boolean;
 }): xdr.ScVal {
+  // Soroban only accepts a map whose keys are sorted; any other order fails
+  // with "ScMap was not sorted by key for conversion to host object".
   return xdr.ScVal.scvMap([
     new xdr.ScMapEntry({
       key: symbolScVal("name"),
       val: symbolScVal(asset.name),
     }),
     new xdr.ScMapEntry({
-      key: symbolScVal("total_supply"),
-      val: i128ScVal(asset.total_supply),
-    }),
-    new xdr.ScMapEntry({
-      key: symbolScVal("price_per_unit"),
-      val: i128ScVal(asset.price_per_unit),
+      key: symbolScVal("paused"),
+      val: boolScVal(asset.paused),
     }),
     new xdr.ScMapEntry({
       key: symbolScVal("payment_token"),
       val: addressScVal(asset.payment_token),
     }),
     new xdr.ScMapEntry({
-      key: symbolScVal("paused"),
-      val: boolScVal(asset.paused),
+      key: symbolScVal("price_per_unit"),
+      val: i128ScVal(asset.price_per_unit),
+    }),
+    new xdr.ScMapEntry({
+      key: symbolScVal("total_supply"),
+      val: i128ScVal(asset.total_supply),
     }),
   ]);
 }
